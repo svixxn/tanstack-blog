@@ -8,8 +8,10 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
+import Header from "~/components/Header";
+import { Toaster } from "~/components/ui/sonner";
 import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
+import { seo } from "~/lib/seo";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -80,8 +82,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <Header />
         {children}
         <TanStackRouterDevtools position="bottom-right" />
+        <Toaster />
         <Scripts />
       </body>
     </html>
