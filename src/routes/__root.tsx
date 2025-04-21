@@ -12,6 +12,7 @@ import Header from "~/components/Header";
 import { Toaster } from "~/components/ui/sonner";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/lib/seo";
+import { fetchUser } from "~/routes/auth/-helpers/service";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -52,6 +53,18 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
+  beforeLoad: async () => {
+    const user = await fetchUser();
+    return {
+      user,
+    };
+  },
+  loader: async ({ context }) => {
+    const user = context.user;
+    return {
+      user,
+    };
+  },
   errorComponent: (props) => {
     return (
       <RootDocument>
@@ -76,13 +89,14 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { user } = Route.useLoaderData();
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Header />
+        <Header user={user} />
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Toaster />

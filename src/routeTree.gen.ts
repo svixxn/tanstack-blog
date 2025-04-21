@@ -12,9 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as RedirectImport } from './routes/redirect'
+import { Route as AuthedRouteImport } from './routes/_authed/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthLoginImport } from './routes/auth/login'
+import { Route as AuthedHomeIndexImport } from './routes/_authed/home/index'
 
 // Create/Update Routes
 
@@ -24,9 +27,20 @@ const RedirectRoute = RedirectImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthedRouteRoute = AuthedRouteImport.update({
+  id: '/_authed',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthIndexRoute = AuthIndexImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -42,6 +56,12 @@ const AuthLoginRoute = AuthLoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthedHomeIndexRoute = AuthedHomeIndexImport.update({
+  id: '/home/',
+  path: '/home/',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -51,6 +71,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRoute
     }
     '/redirect': {
@@ -74,54 +101,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authed/home/': {
+      id: '/_authed/home/'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AuthedHomeIndexImport
+      parentRoute: typeof AuthedRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthedRouteRouteChildren {
+  AuthedHomeIndexRoute: typeof AuthedHomeIndexRoute
+}
+
+const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
+  AuthedHomeIndexRoute: AuthedHomeIndexRoute,
+}
+
+const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(
+  AuthedRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof AuthedRouteRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/auth': typeof AuthIndexRoute
+  '/home': typeof AuthedHomeIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof AuthedRouteRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/auth': typeof AuthIndexRoute
+  '/home': typeof AuthedHomeIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_authed': typeof AuthedRouteRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/auth/': typeof AuthIndexRoute
+  '/_authed/home/': typeof AuthedHomeIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/redirect' | '/auth/login' | '/auth/signup'
+  fullPaths:
+    | '/'
+    | ''
+    | '/redirect'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auth'
+    | '/home'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/redirect' | '/auth/login' | '/auth/signup'
-  id: '__root__' | '/' | '/redirect' | '/auth/login' | '/auth/signup'
+  to:
+    | '/'
+    | ''
+    | '/redirect'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auth'
+    | '/home'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authed'
+    | '/redirect'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/auth/'
+    | '/_authed/home/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
   RedirectRoute: typeof RedirectRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  AuthIndexRoute: typeof AuthIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthedRouteRoute: AuthedRouteRouteWithChildren,
   RedirectRoute: RedirectRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
+  AuthIndexRoute: AuthIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,13 +223,21 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_authed",
         "/redirect",
         "/auth/login",
-        "/auth/signup"
+        "/auth/signup",
+        "/auth/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_authed": {
+      "filePath": "_authed/route.tsx",
+      "children": [
+        "/_authed/home/"
+      ]
     },
     "/redirect": {
       "filePath": "redirect.tsx"
@@ -151,6 +247,13 @@ export const routeTree = rootRoute
     },
     "/auth/signup": {
       "filePath": "auth/signup.tsx"
+    },
+    "/auth/": {
+      "filePath": "auth/index.tsx"
+    },
+    "/_authed/home/": {
+      "filePath": "_authed/home/index.tsx",
+      "parent": "/_authed"
     }
   }
 }

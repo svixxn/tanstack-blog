@@ -9,3 +9,11 @@ export type FilteredSignup = Omit<
   z.infer<typeof signupSchema>,
   "confirmPassword" | "checkTerms"
 >;
+
+export type User = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+};

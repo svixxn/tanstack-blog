@@ -39,7 +39,6 @@ function RouteComponent() {
       onChange: signupSchema,
     },
     onSubmit: async ({ value }) => {
-      // TODO: fix signup
       const result = await signupMutation(value);
       if (result.error) {
         toast("Error", {

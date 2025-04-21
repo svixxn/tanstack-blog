@@ -1,4 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  Router,
+  useRouter,
+} from "@tanstack/react-router";
 import { ArrowRight, AtSign, Key } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
@@ -23,6 +29,7 @@ export const Route = createFileRoute("/auth/login")({
 
 function SignInPage() {
   const { mutateAsync: loginMutation } = useLoginUser();
+  const router = useRouter();
 
   const form = useForm({
     defaultValues: {
@@ -33,7 +40,6 @@ function SignInPage() {
       onChange: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("value", value);
       const result = await loginMutation(value);
       if (result.error) {
         toast("Error", {
@@ -42,6 +48,10 @@ function SignInPage() {
       } else {
         toast("Success", {
           description: result.message,
+        });
+
+        router.navigate({
+          to: "/",
         });
       }
     },
