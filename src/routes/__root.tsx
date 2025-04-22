@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   createRootRoute,
+  createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
@@ -14,7 +15,9 @@ import appCss from "~/styles/app.css?url";
 import { seo } from "~/lib/seo";
 import { fetchUser } from "~/routes/auth/-helpers/service";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       {
@@ -76,14 +79,10 @@ export const Route = createRootRoute({
   component: RootComponent,
 });
 
-const queryClient = new QueryClient();
-
 function RootComponent() {
   return (
     <RootDocument>
-      <QueryClientProvider client={queryClient}>
-        <Outlet />
-      </QueryClientProvider>
+      <Outlet />
     </RootDocument>
   );
 }

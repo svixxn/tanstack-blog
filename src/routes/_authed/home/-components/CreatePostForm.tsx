@@ -3,6 +3,9 @@ import { Image, MapPin, Calendar, Smile, AlignLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
+import { getSupabaseClient } from "~/lib/supabase";
+import { useCreatePost } from "../-helpers";
+import { toast } from "sonner";
 
 export const currentUser = {
   id: "current",
@@ -16,16 +19,26 @@ export const currentUser = {
 export function CreatePostForm() {
   const [content, setContent] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const { mutateAsync: createPost } = useCreatePost();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim()) {
-      // In a real app, this would send the post to an API
-      console.log("Post submitted:", content);
+      const res = await createPost({
+        content: content.trim(),
+      });
+
+      if (res?.error) {
+        toast("Error", {
+          description: res.message,
+        });
+        return;
+      }
+
       setContent("");
     }
   };

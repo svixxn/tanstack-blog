@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authed")({
 
 function RouteComponent() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <div className="flex justify-center">
         <div className="flex max-w-7xl w-full">
           <aside className="hidden sm:block shrink-0">

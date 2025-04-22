@@ -34,8 +34,8 @@ export const currentUser = {
 };
 export function LeftSidebar() {
   return (
-    <div className="h-screen sticky top-0 flex flex-col py-2 w-full max-w-[88px] md:max-w-[240px]">
-      <div className="flex flex-col flex-1 px-2">
+    <div className="sticky top-0 flex flex-col py-2 w-full max-w-[88px] md:max-w-[240px]">
+      <div className="flex flex-col flex-1 px-4">
         <nav className="flex flex-col space-y-1 mt-2">
           {navLinks.map((link) => {
             const Icon = getIconComponent(link.icon);

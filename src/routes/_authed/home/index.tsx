@@ -2,6 +2,8 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { CreatePostForm } from "./-components/CreatePostForm";
 import { PostList } from "./-components/PostList";
+import { postsQueryOptions } from "./-helpers";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/_authed/home/")({
   beforeLoad: async ({ context }) => {
@@ -11,12 +13,17 @@ export const Route = createFileRoute("/_authed/home/")({
       });
     }
   },
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(postsQueryOptions());
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const postsQuery = useSuspenseQuery(postsQueryOptions());
+
   return (
-    <main className="min-h-screen flex-1 border-x w-full">
+    <main className="flex-1 border-x w-full">
       <div className="sticky top-14 z-10 bg-background/60 backdrop-blur-md border-b">
         <div className="px-4 py-3">
           <h2 className="text-xl font-bold">Home</h2>
@@ -38,7 +45,7 @@ function RouteComponent() {
           </TabsList>
           <TabsContent value="for-you" className="mt-0">
             <CreatePostForm />
-            <PostList />
+            <PostList posts={postsQuery.data.data} />
           </TabsContent>
           <TabsContent value="following" className="mt-0">
             <CreatePostForm />
