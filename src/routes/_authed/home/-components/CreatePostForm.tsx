@@ -72,7 +72,7 @@ export function CreatePostForm() {
               onChange={handleContentChange}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              className="min-h-[80px] border-none resize-none focus-visible:ring-0 p-0 pt-2 placeholder-muted-foreground text-lg"
+              className="min-h-[80px] border-none resize-none focus-visible:ring-0 p-0 pt-2 placeholder-muted-foreground text-lg break-all"
               placeholder=""
             />
 

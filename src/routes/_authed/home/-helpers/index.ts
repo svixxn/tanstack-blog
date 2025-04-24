@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { createPost, fetchPosts } from "./service";
+import { createPost, deletePost, fetchPosts } from "./service";
 
 export const postsQueryOptions = () =>
   queryOptions({
@@ -16,6 +16,19 @@ export const useCreatePost = () => {
   return useMutation({
     mutationKey: ["createPost"],
     mutationFn: (data: { content: string }) => createPost({ data }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
+      });
+    },
+  });
+};
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["deletePost"],
+    mutationFn: (data: { id: string }) => deletePost({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["posts"],

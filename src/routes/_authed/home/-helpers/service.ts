@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getSupabaseServerClient } from "~/lib/supabase";
 import { Post } from "./types";
-import { createPostSchema } from "./schemas";
+import { createPostSchema, deletePostSchema } from "./schemas";
 
 export const fetchPosts = createServerFn({ method: "GET" }).handler(
   async () => {
@@ -64,6 +64,23 @@ export const createPost = createServerFn({ method: "POST" })
       content: data.content,
       user_id: user.id,
     });
+
+    if (error) {
+      return {
+        error: true,
+        message: error.message,
+      };
+    }
+  });
+
+export const deletePost = createServerFn({ method: "POST" })
+  .validator((data: unknown) => {
+    return deletePostSchema.parse(data);
+  })
+  .handler(async ({ data }) => {
+    const supabase = await getSupabaseServerClient();
+
+    const { error } = await supabase.from("posts").delete().eq("id", data.id);
 
     if (error) {
       return {

@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { Post } from "../-helpers/types";
+import PostDropdownMenu from "./PostDropdownMenu";
 
 interface PostCardProps {
   post: Post;
@@ -69,17 +70,11 @@ export function PostCard({ post }: PostCardProps) {
               </span>
             </div>
             <div className="ml-auto">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full"
-              >
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
+              <PostDropdownMenu postId={post.id} isOwned />
             </div>
           </div>
 
-          <div className="mt-1 text-[15px] whitespace-pre-wrap">
+          <div className="mt-1 text-[15px] whitespace-pre-wrap break-all">
             {post.content}
           </div>
 

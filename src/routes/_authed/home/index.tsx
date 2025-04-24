@@ -6,13 +6,6 @@ import { postsQueryOptions } from "./-helpers";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/_authed/home/")({
-  beforeLoad: async ({ context }) => {
-    if (!context.user) {
-      throw redirect({
-        to: "/auth/login",
-      });
-    }
-  },
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(postsQueryOptions());
   },
