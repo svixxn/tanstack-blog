@@ -1,16 +1,18 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getSupabaseServerClient } from "~/lib/supabase";
-import { Post } from "./types";
+import type { Post } from "./types";
 import { createPostSchema, deletePostSchema } from "./schemas";
+import type { BaseResponse } from "~/types";
 
-export const fetchPosts = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const supabase = await getSupabaseServerClient();
+export const fetchPosts = createServerFn({
+  method: "GET",
+}).handler(async (): Promise<BaseResponse<Post[]>> => {
+  const supabase = await getSupabaseServerClient();
 
-    const { data, error } = await supabase
-      .from("posts")
-      .select(
-        `
+  const { data, error } = await supabase
+    .from("posts")
+    .select(
+      `
           *,
             users (
             id,
@@ -18,18 +20,17 @@ export const fetchPosts = createServerFn({ method: "GET" }).handler(
             last_name,
             username
             )
-        `
-      )
-      .order("created_at", { ascending: false });
+        `,
+    )
+    .order("created_at", { ascending: false });
 
-    console.log("data", data);
+  console.log("data", data);
 
-    return {
-      error: error,
-      data: data as Post[],
-    };
-  }
-);
+  return {
+    error: error,
+    data: data as Post[],
+  };
+});
 
 export const createPost = createServerFn({ method: "POST" })
   .validator((data: unknown) => {

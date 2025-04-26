@@ -1,14 +1,18 @@
 import { Heart, MessageCircle, Repeat2, Share } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { cn } from "~/lib/utils";
-import type { Post } from "~/domains/posts";
+import type { Post } from "~/domains/posts/types";
 import PostDropdownMenu from "./PostDropdownMenu";
+import { useMatches } from "@tanstack/react-router";
 
 interface PostCardProps {
   post: Post;
 }
 
 export function PostCard({ post }: PostCardProps) {
+  const matches = useMatches();
+  const user = matches.find((match) => match.context?.user)?.context?.user;
+
   return (
     <div className="border-b px-4 py-3 hover:bg-muted/10 post-card transition-colors">
       <div className="flex">
@@ -61,7 +65,10 @@ export function PostCard({ post }: PostCardProps) {
               </span>
             </div>
             <div className="ml-auto">
-              <PostDropdownMenu postId={post.id} isOwned />
+              <PostDropdownMenu
+                postId={post.id}
+                isOwned={post.users.id === user?.id}
+              />
             </div>
           </div>
 

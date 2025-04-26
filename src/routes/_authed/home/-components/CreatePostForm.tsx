@@ -28,17 +28,23 @@ export function CreatePostForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim()) {
-      const res = await createPost({
-        content: content.trim(),
-      });
-
-      if (res?.error) {
-        toast("Error", {
-          description: res.message,
-        });
-        return;
-      }
-
+      await createPost(
+        {
+          content: content.trim(),
+        },
+        {
+          onSuccess: () => {
+            toast("Success", {
+              description: "Post created successfully",
+            });
+          },
+          onError: (error) => {
+            toast("Error", {
+              description: error.message,
+            });
+          },
+        },
+      );
       setContent("");
     }
   };

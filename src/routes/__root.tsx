@@ -5,6 +5,7 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type * as React from "react";
 import Header from "~/components/Header";
@@ -95,7 +96,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <Header user={user} />
         {children}
-        <TanStackRouterDevtools position="bottom-right" />
+        <ReactQueryDevtools initialIsOpen={false} />
+        <TanStackRouterDevtools position="bottom-left" />
         <Toaster />
         <Scripts />
       </body>
