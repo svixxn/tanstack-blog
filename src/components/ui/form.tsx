@@ -136,7 +136,7 @@ function FormControlIcon({
           buttonVariants({ variant: "ghost", size: "sm" }),
           "hover:bg-transparent",
           "absolute top-0 left-0 inline-flex h-full items-center justify-center px-3 py-2",
-          !errors.length && "text-destructive",
+          !!errors.length && "text-destructive",
         )}
       >
         {icon}
@@ -182,14 +182,14 @@ type FormButtonProps = Omit<ButtonProps, "children"> & {
   children?: (props: { isSubmitting?: boolean }) => React.ReactNode;
 };
 
-function FormButton({ children }: FormButtonProps) {
+function FormButton({ children, ...props }: FormButtonProps) {
   const form = useFormContext();
 
   return (
     <form.Subscribe
       selector={(state) => [state.canSubmit, state.isSubmitting]}
       children={([canSubmit, isSubmitting]) => (
-        <Button disabled={!canSubmit} isPending={isSubmitting}>
+        <Button disabled={!canSubmit} isPending={isSubmitting} {...props}>
           {children?.({ isSubmitting })}
         </Button>
       )}
