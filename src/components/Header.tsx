@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Link, useRouter } from "@tanstack/react-router";
-import { User } from "~/routes/auth/-helpers/types";
+import type { User } from "~/routes/auth/-helpers/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +37,9 @@ const Header = ({ user }: HeaderProps) => {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-200 glass-header`}
+      className={
+        "sticky top-0 z-40 w-full transition-all duration-200 glass-header"
+      }
     >
       <div className="flex items-center justify-between px-4 h-14">
         <div className="flex items-center md:w-72 lg:w-64">
