@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useRouter } from "@tanstack/react-router";
 import { ArrowRight, AtSign, Key, User } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/auth/signup")({
 
 function RouteComponent() {
   const { mutateAsync: signupMutation } = useSignUpUser();
+  const router = useRouter();
 
   const form = useAppForm({
     defaultValues: {
@@ -38,12 +39,14 @@ function RouteComponent() {
     validators: {
       onChange: signupSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       await signupMutation(value, {
         onSuccess: () => {
           toast("Success", {
             description: "Account created successfully",
           });
+          formApi.reset();
+          router.navigate({ to: "/auth/login" });
         },
         onError: (error) => {
           toast("Error", {
@@ -81,7 +84,7 @@ function RouteComponent() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 items-baseline">
               <form.AppField
                 name="firstName"
                 children={(field) => (
