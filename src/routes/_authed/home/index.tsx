@@ -1,9 +1,9 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { CreatePostForm } from "./-components/CreatePostForm";
 import { PostList } from "./-components/PostList";
-import { postsQueryOptions } from "./-helpers";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { postsQueryOptions } from "~/domains/posts";
 
 export const Route = createFileRoute("/_authed/home/")({
   loader: async ({ context }) => {

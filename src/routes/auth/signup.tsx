@@ -15,8 +15,8 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { useAppForm } from "~/components/ui/form";
 import { Icons } from "~/components/ui/icons";
 import { Input, InputPassword } from "~/components/ui/input";
-import { useSignUpUser } from "./-helpers";
-import { signupSchema } from "./-helpers/schemas";
+import { useSignUpUser } from "~/domains/auth";
+import { signupSchema } from "~/domains/auth/schemas";
 
 export const Route = createFileRoute("/auth/signup")({
   component: RouteComponent,

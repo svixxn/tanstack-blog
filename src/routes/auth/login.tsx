@@ -14,8 +14,8 @@ import {
 import { useAppForm } from "~/components/ui/form";
 import { Icons } from "~/components/ui/icons";
 import { Input, InputPassword } from "~/components/ui/input";
-import { useLoginUser } from "./-helpers";
-import { loginSchema } from "./-helpers/schemas";
+import { useLoginUser } from "~/domains/auth";
+import { loginSchema } from "~/domains/auth/schemas";
 
 export const Route = createFileRoute("/auth/login")({
   component: SignInPage,

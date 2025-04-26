@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { Image, MapPin, Calendar, Smile, AlignLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
-import { getSupabaseClient } from "~/lib/supabase";
-import { useCreatePost } from "../-helpers";
+import { useCreatePost } from "~/domains/posts";
 import { toast } from "sonner";
 
 export const currentUser = {

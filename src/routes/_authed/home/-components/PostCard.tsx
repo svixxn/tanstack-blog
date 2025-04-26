@@ -1,16 +1,7 @@
-import React, { useState } from "react";
-import {
-  Heart,
-  MessageCircle,
-  Repeat2,
-  BarChart2,
-  Share,
-  MoreHorizontal,
-} from "lucide-react";
+import { Heart, MessageCircle, Repeat2, Share } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
-import { Post } from "../-helpers/types";
+import type { Post } from "~/domains/posts";
 import PostDropdownMenu from "./PostDropdownMenu";
 
 interface PostCardProps {
@@ -101,7 +92,7 @@ export function PostCard({ post }: PostCardProps) {
             <button
               className={cn(
                 "flex items-center group",
-                false && "text-green-500"
+                false && "text-green-500",
               )}
               // onClick={toggleRepost}
               aria-label="Repost"
@@ -109,7 +100,7 @@ export function PostCard({ post }: PostCardProps) {
               <div
                 className={cn(
                   "p-2 rounded-full group-hover:bg-green-50 group-hover:text-green-500 transition-colors",
-                  false && "text-green-500"
+                  false && "text-green-500",
                 )}
               >
                 <Repeat2 className="h-5 w-5" />
@@ -117,7 +108,7 @@ export function PostCard({ post }: PostCardProps) {
               <span
                 className={cn(
                   "text-sm ml-1 group-hover:text-green-500",
-                  false && "text-green-500"
+                  false && "text-green-500",
                 )}
               >
                 {post.reposts}
@@ -127,7 +118,7 @@ export function PostCard({ post }: PostCardProps) {
             <button
               className={cn(
                 "flex items-center group",
-                false && "text-pink-500"
+                false && "text-pink-500",
               )}
               // onClick={toggleLike}
               aria-label="Like"
@@ -136,7 +127,7 @@ export function PostCard({ post }: PostCardProps) {
                 className={cn(
                   "p-2 rounded-full group-hover:bg-pink-50 group-hover:text-pink-500 transition-colors",
                   false && "text-pink-500",
-                  false && "animate-heartbeat"
+                  false && "animate-heartbeat",
                 )}
               >
                 <Heart className={cn("h-5 w-5", false && "fill-current")} />
@@ -144,7 +135,7 @@ export function PostCard({ post }: PostCardProps) {
               <span
                 className={cn(
                   "text-sm ml-1 group-hover:text-pink-500",
-                  false && "text-pink-500"
+                  false && "text-pink-500",
                 )}
               >
                 {post.likes}

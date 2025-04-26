@@ -1,6 +1,6 @@
-import { ChevronsUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { useDeletePost } from "../-helpers";
+import { useDeletePost } from "~/domains/posts";
 import { toast } from "sonner";
 import {
   DropdownMenu,
