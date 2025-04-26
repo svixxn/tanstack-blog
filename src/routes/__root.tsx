@@ -1,19 +1,17 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { QueryClient } from "@tanstack/react-query";
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
-  createRootRoute,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import * as React from "react";
+import type * as React from "react";
 import Header from "~/components/Header";
 import { Toaster } from "~/components/ui/sonner";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/lib/seo";
-import { fetchUser } from "~/routes/auth/-helpers/service";
+import { fetchUser } from "~/domains/auth/service";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -28,9 +26,9 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: "Bloggy",
+        description:
+          "Bloggy is a social media platform for sharing your thoughts and ideas.",
       }),
     ],
     links: [
@@ -90,7 +88,7 @@ function RootComponent() {
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { user } = Route.useLoaderData();
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
