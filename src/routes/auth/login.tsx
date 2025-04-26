@@ -1,5 +1,7 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { Link, createFileRoute, useRouter } from "@tanstack/react-router";
 import { ArrowRight, AtSign, Key } from "lucide-react";
+import React from "react";
+import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -9,13 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { useLoginUser } from "./-helpers";
-import { toast } from "sonner";
-import { loginSchema } from "./-helpers/schemas";
 import { useAppForm } from "~/components/ui/form";
-import React from "react";
 import { Icons } from "~/components/ui/icons";
+import { Input, InputPassword } from "~/components/ui/input";
+import { useLoginUser } from "./-helpers";
+import { loginSchema } from "./-helpers/schemas";
 
 export const Route = createFileRoute("/auth/login")({
   component: SignInPage,
@@ -113,10 +113,9 @@ function SignInPage() {
                   </div>
                   <field.FormControlIcon icon={<Key />}>
                     <field.FormControl>
-                      <Input
+                      <InputPassword
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        type="password"
                         onChange={(e) => field.handleChange(e.target.value)}
                         placeholder="••••••••"
                         autoComplete="current-password"
@@ -128,7 +127,7 @@ function SignInPage() {
               )}
             />
             <form.AppForm>
-              <form.FormButton>
+              <form.FormButton className="w-full">
                 {({ isSubmitting }) =>
                   isSubmitting ? "Submitting..." : "Submit"
                 }
