@@ -41,6 +41,8 @@ export function PostCard({ post }: PostCardProps) {
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Verified"
                   >
                     <path
                       d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
@@ -87,7 +89,11 @@ export function PostCard({ post }: PostCardProps) {
           )} */}
 
           <div className="flex justify-between mt-3 max-w-md text-muted-foreground">
-            <button className="flex items-center group" aria-label="Reply">
+            <button
+              type="button"
+              className="flex items-center group"
+              aria-label="Reply"
+            >
               <div className="p-2 rounded-full group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
                 <MessageCircle className="h-5 w-5" />
               </div>
@@ -97,10 +103,8 @@ export function PostCard({ post }: PostCardProps) {
             </button>
 
             <button
-              className={cn(
-                "flex items-center group",
-                false && "text-green-500",
-              )}
+              type="button"
+              className="flex items-center group"
               // onClick={toggleRepost}
               aria-label="Repost"
             >
@@ -123,6 +127,7 @@ export function PostCard({ post }: PostCardProps) {
             </button>
 
             <button
+              type="button"
               className={cn(
                 "flex items-center group",
                 false && "text-pink-500",
@@ -149,7 +154,11 @@ export function PostCard({ post }: PostCardProps) {
               </span>
             </button>
 
-            <button className="flex items-center group" aria-label="Share">
+            <button
+              type="button"
+              className="flex items-center group"
+              aria-label="Share"
+            >
               <div className="p-2 rounded-full group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
                 <Share className="h-5 w-5" />
               </div>
