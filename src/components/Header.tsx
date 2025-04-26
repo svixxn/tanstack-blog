@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Link, useRouter } from "@tanstack/react-router";
-import type { User } from "~/routes/auth/-helpers/types";
+import type { User } from "~/domains/auth/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { logoutFn } from "~/routes/auth/-helpers/service";
+import { logoutFn } from "~/domains/auth/service";
 import { toast } from "sonner";
 
 type HeaderProps = {
