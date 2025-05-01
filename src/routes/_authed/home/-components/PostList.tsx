@@ -1,6 +1,5 @@
-import React from "react";
 import { PostCard } from "./PostCard";
-import { Post } from "../-helpers/types";
+import type { Post } from "~/domains/posts/types";
 
 type PostListProps = {
   posts: Post[];

@@ -1,4 +1,4 @@
-import { AnyFieldApi } from "@tanstack/react-form";
+import type { AnyFieldApi } from "@tanstack/react-form";
 
 export default function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (

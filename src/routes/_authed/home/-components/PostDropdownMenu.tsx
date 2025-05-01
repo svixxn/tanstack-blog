@@ -1,6 +1,6 @@
-import { ChevronsUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { useDeletePost } from "../-helpers";
+import { useDeletePost } from "~/domains/posts";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -18,16 +18,23 @@ const PostDropdownMenu = ({ postId, isOwned }: PostDropdownMenuProps) => {
   const { mutateAsync: deletePostAction } = useDeletePost();
 
   const handleDeletePost = async () => {
-    const res = await deletePostAction({
-      id: postId,
-    });
-
-    if (res?.error) {
-      toast("Error", {
-        description: res.message,
-      });
-      return;
-    }
+    await deletePostAction(
+      {
+        id: postId,
+      },
+      {
+        onSuccess: () => {
+          toast("Success", {
+            description: "Post deleted successfully",
+          });
+        },
+        onError: (error) => {
+          toast("Error", {
+            description: error.message,
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -42,7 +49,11 @@ const PostDropdownMenu = ({ postId, isOwned }: PostDropdownMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
-        <DropdownMenuItem onClick={handleDeletePost} className="text-red-500">
+        <DropdownMenuItem
+          onClick={handleDeletePost}
+          disabled={!isOwned}
+          className="text-red-500"
+        >
           Delete Post
         </DropdownMenuItem>
       </DropdownMenuContent>
